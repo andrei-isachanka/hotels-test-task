@@ -4,6 +4,7 @@ import hotel_service.models.Hotel;
 import hotel_service.repository.HotelRepository;
 import hotel_service.repository.HotelSearchCriteria;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "app.persistence", havingValue = "jpa", matchIfMissing = true)
 public class JpaHotelRepository implements HotelRepository {
 
     private final HotelJpaRepository jpa;
