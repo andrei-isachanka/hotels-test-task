@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001-create-hotel" author="andrey">
+        <createTable tableName="hotel">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="description" type="VARCHAR(2000)"/>
+            <column name="brand" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="house_number" type="INT"><constraints nullable="false"/></column>
+            <column name="street" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="city" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="country" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="post_code" type="VARCHAR(32)"><constraints nullable="false"/></column>
+            <column name="phone" type="VARCHAR(64)"><constraints nullable="false"/></column>
+            <column name="email" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="check_in" type="VARCHAR(5)"><constraints nullable="false"/></column>
+            <column name="check_out" type="VARCHAR(5)"/>
+        </createTable>
+        <createIndex tableName="hotel" indexName="idx_hotel_brand"><column name="brand"/></createIndex>
+        <createIndex tableName="hotel" indexName="idx_hotel_city"><column name="city"/></createIndex>
+        <createIndex tableName="hotel" indexName="idx_hotel_country"><column name="country"/></createIndex>
+    </changeSet>
+
+    <changeSet id="002-create-amenity" author="andrey">
+        <createTable tableName="amenity">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_amenity_name"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003-create-hotel-amenity" author="andrey">
+        <createTable tableName="hotel_amenity">
+            <column name="hotel_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="amenity_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+        <addPrimaryKey tableName="hotel_amenity" columnNames="hotel_id, amenity_id"
+                       constraintName="pk_hotel_amenity"/>
+        <addForeignKeyConstraint baseTableName="hotel_amenity" baseColumnNames="hotel_id"
+                                 referencedTableName="hotel" referencedColumnNames="id"
+                                 constraintName="fk_ha_hotel" onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="hotel_amenity" baseColumnNames="amenity_id"
+                                 referencedTableName="amenity" referencedColumnNames="id"
+                                 constraintName="fk_ha_amenity" onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
