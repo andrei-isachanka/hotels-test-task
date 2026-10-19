@@ -16,7 +16,7 @@ RESTful-сервис для работы с отелями: список, рас
 ## API
 
 | Метод | Путь | Описание | 
-|---|---|---|---|
+|---|---|---|
 | GET | `/property-view/hotels` | Список всех отелей (краткая информация) | 
 | GET | `/property-view/hotels/{id}` | Расширенная информация об отеле | 
 | GET | `/property-view/search` | Поиск по `name`, `brand`, `city`, `country`, `amenities` | 
